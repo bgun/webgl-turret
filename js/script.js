@@ -28,9 +28,9 @@ var game = {
       reflectivity: 0.25
     }),
     metalWireMaterial: new THREE.MeshPhongMaterial({
-      color: 0x888888,
+      color: 0x666666,
       wireframe: true,
-      wireframeLinewidth: 3
+      wireframeLinewidth: 4
     }),
     metalFlatMaterial: new THREE.MeshLambertMaterial({
       color: 0xDDDDDD,
@@ -73,6 +73,9 @@ var game = {
       emissive: 0x4488BB,
       wireframe: true,
       wireframeLinewidth: 4
+    }),
+    spotMaterial: new THREE.MeshBasicMaterial({
+      color: 0xFFFFFF
     })
   },
   renderer: {},
@@ -297,11 +300,12 @@ game.makeTurret = function(x,y,z) {
       base.position.y = 3;
 
   var base2 = new THREE.Mesh(
-    new THREE.CylinderGeometry(60,60,16,32,1,false),
+    new THREE.CylinderGeometry(64,70,16,8,1,false),
     game.materials.metalWireMaterial);
       base2.castShadow = true;
       base2.receiveShadow = true;
       base2.position.y = 8;
+      base2.rotation.y = 22.5;
 
   var dome = new THREE.Mesh(
     new THREE.SphereGeometry(50,32,32,0,Math.PI*2,0,Math.PI/2),
@@ -309,6 +313,28 @@ game.makeTurret = function(x,y,z) {
       dome.castShadow = true;
       dome.receiveShadow = true;
       dome.position.y = 15;
+
+  var spot = new THREE.Mesh(
+    new THREE.CubeGeometry(25,25,25,1,1,1,[
+      game.materials.metalMaterial,
+      game.materials.metalMaterial,
+      game.materials.metalMaterial,
+      game.materials.metalMaterial,
+      game.materials.spotMaterial,
+      game.materials.metalMaterial
+    ]), new THREE.MeshFaceMaterial());
+      spot.castShadows = true;
+      spot.receiveShadows = true;
+      spot.position.set(30,52,0);
+      spot.scale.set(1,1,3.3);
+
+  var connector = new THREE.Mesh(
+    new THREE.CubeGeometry(30,30,30),
+    game.materials.metalMaterial);
+      connector.castShadows = true;
+      connector.receiveShadows = true;
+      connector.scale.set(2,1,0.5);
+      connector.position.set(15,55,0);
 
   var lathePts = [];
   lathePts.push(new THREE.Vector3(12, 0, 0));
@@ -322,20 +348,22 @@ game.makeTurret = function(x,y,z) {
   var gun  = new THREE.Mesh(
     new THREE.LatheGeometry(lathePts,4),
     game.materials.metalFlatMaterial);
-      gun.position.y = y+38;
-      gun.rotation.z = -(90*(Math.PI/180));
+      gun.position.set(0,38,(-90*Math.PI/180));
       gun.castShadow = true;
       gun.receiveShadow = true;
+      gun.scale.set(1.2,1.2,1.2);
 
   var lightTarget = new THREE.Object3D();
-      lightTarget.position.set(0,70,200);
+      lightTarget.position.set(30,70,200);
   var light = new THREE.SpotLight(0xFFDD66, 4);
-      light.position.set(0,70,50);
+      light.position.set(30,70,50);
       light.target = lightTarget;
       light.castShadow = true;
 
   t.add(base);
   t.add(base2);
+  t.add(spot);
+  t.add(connector);
   t.add(dome);
   t.add(gun);
   t.add(light);
@@ -668,7 +696,7 @@ game.start = function() {
   game.kills = 0;
   game.shotsFired = 0;
   game.shotsHit = 0;
-
+  game.currentWave = -1;
   game.playing = true;
   game.nextWave();
 }
