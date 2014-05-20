@@ -189,10 +189,8 @@ game.init = function() {
       keyLight.position.y = 500;
       keyLight.position.z = 500;
       keyLight.castShadow = true;
-  var fillLight1 = new THREE.PointLight(0xff6666, 0.5);
-      fillLight1.position.set(-1000,300,0);
-  var fillLight2 = new THREE.PointLight(0xDDAA55, 0.3);
-      fillLight2.position.set(1000,300,-300);
+  var sunLight = new THREE.DirectionalLight(0xff6666, 0.5);
+      sunLight.position.set(0,1,0);
 
   game.sparkLight   = new THREE.PointLight(0xFF8800, 0.1, 500);
   game.powerupLight = new THREE.PointLight(0x0066FF, 1, 300);
@@ -202,8 +200,7 @@ game.init = function() {
   game.scene.add(game.entities.turret);
   game.scene.add(ground);
   game.scene.add(keyLight);
-  game.scene.add(fillLight1);
-  game.scene.add(fillLight2);
+  game.scene.add(sunLight);
   game.scene.add(game.sparkLight);
   game.scene.add(game.powerupLight);
 
