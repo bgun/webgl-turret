@@ -269,8 +269,7 @@ game.init = function() {
 
   // start animation
   console.log("Initialized");
-  //game.animloop();
-  game.renderer.render(game.scene, game.camera);
+  game.animloop();
   game.start();
 }
 
