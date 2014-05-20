@@ -205,7 +205,7 @@ game.init = function() {
   game.scene.add(game.powerupLight);
 
   // key controls
-  $(document).on('mousemove',function(e) {
+  $(document).on('click',function(e) {
     var cartX =  e.clientX - (game.WIDTH / 2),
         cartY =  e.clientY - (game.HEIGHT / 2),
         theta = Math.atan(cartX/cartY);
@@ -213,50 +213,8 @@ game.init = function() {
       theta = theta+(Math.PI);
     }
     game.entities.turret.rotation.y = theta;
-  });
-  $(document).on('mousedown',function(e) {
-    inputController.fire = true;
-  });
-  $(document).on('mouseup',function(e) {
-    inputController.fire = false;
-  });
-  $(document).on('keydown',function(e) {
-    switch(e.keyCode) {
-      case 32: // space
-        inputController.fire = true;
-        break;
-      case 37: // left arrow
-        inputController.left = true;
-        break;
-      case 38: // up arrow
-        inputController.up = true;
-        break;
-      case 39: // right arrow
-        inputController.right = true;
-        break;
-      case 40: // down arrow
-        inputController.down = true;
-        break;
-    }
-  });
-  $(document).on('keyup',function(e) {
-    switch(e.keyCode) {
-      case 32: // space
-        inputController.fire = false;
-        break;
-      case 37: // left
-        inputController.left = false;
-        break;
-      case 38: // up
-        inputController.up = false;
-        break;
-      case 39: // right
-        inputController.right = false;
-        break;
-      case 40: // down
-        inputController.down = false;
-        break;
-    }
+    //inputController.fire = true;
+    game.fireTurret();
   });
 
   // start animation
@@ -444,6 +402,7 @@ game.makeBullet = function() {
 }
 
 game.fireTurret = function() {
+  game.shotsFired++;
   game.makeBullet();
   
   /*
@@ -526,10 +485,11 @@ game.moveAll = function() {
   if(inputController.right && game.turretRotationSpeed > -game.TURRET_MAX_SPEED) {
     game.turretRotationSpeed -= game.TURRET_ACCEL;
   }
+  /*
   if(inputController.fire && !game.reloading) {
     game.fireTurret();
-    game.shotsFired++;
   }
+  */
 
   // turret friction
   if(game.turretRotationSpeed > 0) {
