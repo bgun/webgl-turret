@@ -248,7 +248,7 @@ game.makeTurret = function(x,y,z) {
       t.position.z = z;
 
   var base = new THREE.Mesh(
-    new THREE.CylinderGeometry(65,65,6,32,1,false),
+    new THREE.CylinderGeometry(65,65,6,8,1,false),
     game.materials.metalMaterial);
       base.castShadow = true;
       base.receiveShadow = true;
@@ -263,7 +263,7 @@ game.makeTurret = function(x,y,z) {
       base2.rotation.y = 22.5;
 
   var dome = new THREE.Mesh(
-    new THREE.SphereGeometry(50,32,32,0,Math.PI*2,0,Math.PI/2),
+    new THREE.SphereGeometry(50,8,8,0,Math.PI*2,0,Math.PI/2),
     game.materials.metalMaterial);
       dome.castShadow = true;
       dome.receiveShadow = true;
