@@ -79,9 +79,11 @@ var game = {
     })
   },
   renderer: {},
+  /*
   soundfx: {
     laserIndex: 0
   },
+  */
   waves: [
     {
       enemyCount: 30,
@@ -123,26 +125,30 @@ var game = {
   turretRotationSpeed: 0
 };
 
-var $container, $panel, $message;
+//var $container, $panel, $message;
 var inputController = {};
 
 game.init = function() {
 
   // get the DOM element to attach to
   // - assume we've got jQuery to hand
-  $container = $('#container');
-  $message   = $('#message');
-  $panel     = $('#panel');
-  $message.on('click',game.start);
+  //$container = $('#container');
+  //$message   = $('#message');
+  //$panel     = $('#panel');
+  //$message.on('click',game.start);
 
-  game.showMessage("Click to start", "Mouse to rotate, spacebar/click to fire");
+  var container = document.createElement("div");
+  container.id = "container";
+  document.body.appendChild(container);
+
+  //game.showMessage("Click to start", "Mouse to rotate, spacebar/click to fire");
 
   // sound effects
-  game.soundfx.$laser = $('.sfx-laser');
+  //game.soundfx.$laser = $('.sfx-laser');
 
   // set the scene size
-  game.WIDTH = $container.width(),
-  game.HEIGHT = $container.height();
+  game.WIDTH  = window.innerWidth;
+  game.HEIGHT = window.innerHeight;
 
   // set some camera attributes
   game.VIEW_ANGLE = 45;
@@ -156,7 +162,8 @@ game.init = function() {
   game.renderer.setSize(game.WIDTH, game.HEIGHT);
   game.renderer.shadowMapEnabled = true;
   // attach the render-supplied DOM element
-  $container.append(game.renderer.domElement);
+  //$container.append(game.renderer.domElement);
+  container.appendChild(game.renderer.domElement);
 
   // create the scene
   game.scene = new THREE.Scene();
@@ -266,6 +273,7 @@ game.init = function() {
   // start animation
   console.log("Initialized");
   game.animloop();
+  game.start();
 }
 
 game.getRandomPointInRing = function(ringInner, ringWidth) {
@@ -473,11 +481,13 @@ game.makeBullet = function() {
 game.fireTurret = function() {
   game.makeBullet();
   
+  /*
   if(game.soundfx.laserIndex > game.soundfx.$laser.length-1) {
     game.soundfx.laserIndex = 0;
   }
   game.soundfx.$laser[game.soundfx.laserIndex].play();
   game.soundfx.laserIndex++;
+  */
 
   game.reloading = true;
   setTimeout(function() {
@@ -498,6 +508,7 @@ game.hitTest = function(object1, object2, range) {
   }
 }
 
+/*
 game.updatePanel = function() {
   // display stats
   $panel.find('#life').css({
@@ -519,13 +530,14 @@ game.showMessage = function(title, msg, fadeTime) {
     },fadeTime);
   }
 }
+*/
 
 game.nextWave = function() {
   game.currentWave++;
   game.currentKills = 0;
   game.enemiesMadeForWave = 0;
   game.clearAll();
-  game.showMessage('Wave '+(game.currentWave+1), '', 2000);
+  //game.showMessage('Wave '+(game.currentWave+1), '', 2000);
 }
 
 game.clearAll = function() {
@@ -686,7 +698,7 @@ game.moveAll = function() {
 }
 
 game.start = function() {
-  $message.off('click');
+  //$message.off('click');
 
   // clean up
   game.clearAll();
@@ -716,8 +728,8 @@ game.end = function() {
   } else {
     hitPct = 0;
   }
-  game.showMessage("Game over","Accuracy: "+hitPct+"% &nbsp; Kills: "+game.kills);
-  $message.on('click',game.start);
+  //game.showMessage("Game over","Accuracy: "+hitPct+"% &nbsp; Kills: "+game.kills);
+  //$message.on('click',game.start);
   setTimeout(function() {
     game.playing = false;
   },150);
@@ -728,10 +740,11 @@ game.animloop = function() {
   if(game.playing) {
     game.moveAll();
   }
-  game.updatePanel();
+  //game.updatePanel();
   game.renderer.render(game.scene, game.camera);
 }
 
-$(function() {
+//$(function() {
+window.addEventListener("load",function() {
   game.init();
 });
