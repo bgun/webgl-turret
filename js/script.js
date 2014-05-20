@@ -188,7 +188,7 @@ game.init = function() {
       keyLight.position.x = 500;
       keyLight.position.y = 500;
       keyLight.position.z = 500;
-      keyLight.castShadow = true;
+      //keyLight.castShadow = true;
   var sunLight = new THREE.DirectionalLight(0xff6666, 0.5);
       sunLight.position.set(0,1,0);
 
