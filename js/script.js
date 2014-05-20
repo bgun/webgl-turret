@@ -175,10 +175,6 @@ game.init = function() {
   game.camera.lookAt(new THREE.Vector3(0,0,0));
 
   // geometries
-  game.materials.groundMaterial.map.repeat.x = 4;
-  game.materials.groundMaterial.map.repeat.y = 4;
-  game.materials.groundMaterial.map.wrapS = THREE.RepeatWrapping;
-  game.materials.groundMaterial.map.wrapT = THREE.RepeatWrapping;
   var ground = new THREE.Mesh(
     new THREE.PlaneGeometry(4000,4000,100,100),
     game.materials.groundMaterial);
