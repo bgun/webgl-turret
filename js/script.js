@@ -22,12 +22,11 @@ var game = {
     turret:  {}
   },
   materials: {
-    metalMaterial: new THREE.MeshPhongMaterial({
+    metalMaterial: new THREE.MeshLambertMaterial({
       color: 0xDDDDDD,
-      metal: true,
       reflectivity: 0.25
     }),
-    metalWireMaterial: new THREE.MeshPhongMaterial({
+    metalWireMaterial: new THREE.MeshLambertMaterial({
       color: 0x666666,
       wireframe: true,
       wireframeLinewidth: 4
@@ -40,35 +39,33 @@ var game = {
       color: 0xFFFFFF,
       map: THREE.ImageUtils.loadTexture('images/ground.png')
     }),
-    badguyMaterial: new THREE.MeshPhongMaterial({
+    badguyMaterial: new THREE.MeshLambertMaterial({
       color: 0x555555,
-      metal: true,
       shininess: 90
     }),
-    badguyHurtMaterial: new THREE.MeshPhongMaterial({
-      color: 0x994444,
-      metal: true,
+    badguyHurtMaterial: new THREE.MeshLambertMaterial({
+      color: 0x994444
     }),
     bulletMaterial: new THREE.MeshBasicMaterial({
-      blending: THREE.AdditiveBlending,
+      //blending: THREE.AdditiveBlending,
       color: 0xFFBB77,
       transparent: true
     }),
     sparkMaterial: new THREE.ParticleBasicMaterial({
-      blending: THREE.AdditiveBlending,
+      //blending: THREE.AdditiveBlending,
       color: 0xFF5500,
       map: THREE.ImageUtils.loadTexture('images/spark.png'),
       size: 100,
       transparent: true
     }),
     blueSparkMaterial: new THREE.ParticleBasicMaterial({
-      blending: THREE.AdditiveBlending,
+      //blending: THREE.AdditiveBlending,
       color: 0x0066FF,
       map: THREE.ImageUtils.loadTexture('images/spark.png'),
       size: 100,
       transparent: true
     }),
-    powerupMaterial: new THREE.MeshPhongMaterial({
+    powerupMaterial: new THREE.MeshLambertMaterial({
       color: 0x444444,
       emissive: 0x4488BB,
       wireframe: true,
@@ -323,28 +320,6 @@ game.makeTurret = function(x,y,z) {
       dome.receiveShadow = true;
       dome.position.y = 15;
 
-  var spot = new THREE.Mesh(
-    new THREE.CubeGeometry(25,25,25,1,1,1,[
-      game.materials.metalMaterial,
-      game.materials.metalMaterial,
-      game.materials.metalMaterial,
-      game.materials.metalMaterial,
-      game.materials.spotMaterial,
-      game.materials.metalMaterial
-    ]), new THREE.MeshFaceMaterial());
-      spot.castShadows = true;
-      spot.receiveShadows = true;
-      spot.position.set(30,52,0);
-      spot.scale.set(1,1,3.3);
-
-  var connector = new THREE.Mesh(
-    new THREE.CubeGeometry(30,30,30),
-    game.materials.metalMaterial);
-      connector.castShadows = true;
-      connector.receiveShadows = true;
-      connector.scale.set(2,1,0.5);
-      connector.position.set(15,55,0);
-
   var lathePts = [];
   lathePts.push(new THREE.Vector3(12, 0, 0));
   lathePts.push(new THREE.Vector3(11, 0, 50));
@@ -371,8 +346,6 @@ game.makeTurret = function(x,y,z) {
 
   t.add(base);
   t.add(base2);
-  t.add(spot);
-  t.add(connector);
   t.add(dome);
   t.add(gun);
   t.add(light);
@@ -385,7 +358,7 @@ game.makePowerup = function(pos) {
     var pos = game.getRandomPointInRing(400,300);
   }
   var p = new THREE.Mesh(
-    new THREE.CubeGeometry(50,30,50),
+    new THREE.BoxGeometry(50,30,50),
     game.materials.powerupMaterial);
       p.position = pos;
       p.properties.vertSpeed = 3;
