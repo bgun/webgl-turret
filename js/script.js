@@ -36,8 +36,7 @@ var game = {
       shading: THREE.FlatShading
     }),
     groundMaterial: new THREE.MeshLambertMaterial({
-      color: 0xFFFFFF,
-      map: THREE.ImageUtils.loadTexture('images/ground.png')
+      color: 0xAA5500
     }),
     badguyMaterial: new THREE.MeshLambertMaterial({
       color: 0x555555,
@@ -171,7 +170,7 @@ game.init = function() {
     game.ASPECT,
     game.NEAR,
     game.FAR);
-  //game.camera.position.z = 600;
+  game.camera.position.z = 600;
   game.camera.position.y = 1000;
   game.camera.lookAt(new THREE.Vector3(0,0,0));
 
