@@ -121,7 +121,7 @@ var game = {
   turretRotationSpeed: 0
 };
 
-//var $container, $panel, $message;
+var $panel, $message;
 var inputController = {};
 
 game.init = function() {
@@ -129,15 +129,15 @@ game.init = function() {
   // get the DOM element to attach to
   // - assume we've got jQuery to hand
   //$container = $('#container');
-  //$message   = $('#message');
-  //$panel     = $('#panel');
-  //$message.on('click',game.start);
+  $message   = $('#message');
+  $panel     = $('#panel');
+  $message.on('click',game.start);
 
   var container = document.createElement("div");
   container.id = "container";
   document.body.appendChild(container);
 
-  //game.showMessage("Click to start", "Mouse to rotate, spacebar/click to fire");
+  game.showMessage("Click to start", "Mouse to rotate, spacebar/click to fire");
 
   // sound effects
   //game.soundfx.$laser = $('.sfx-laser');
@@ -220,7 +220,6 @@ game.init = function() {
   // start animation
   console.log("Initialized");
   game.animloop();
-  game.start();
 }
 
 game.getRandomPointInRing = function(ringInner, ringWidth) {
@@ -428,7 +427,6 @@ game.hitTest = function(object1, object2, range) {
   }
 }
 
-/*
 game.updatePanel = function() {
   // display stats
   $panel.find('#life').css({
@@ -450,14 +448,13 @@ game.showMessage = function(title, msg, fadeTime) {
     },fadeTime);
   }
 }
-*/
 
 game.nextWave = function() {
   game.currentWave++;
   game.currentKills = 0;
   game.enemiesMadeForWave = 0;
   game.clearAll();
-  //game.showMessage('Wave '+(game.currentWave+1), '', 2000);
+  game.showMessage('Wave '+(game.currentWave+1), '', 2000);
 }
 
 game.clearAll = function() {
@@ -661,7 +658,7 @@ game.animloop = function() {
   if(game.playing) {
     game.moveAll();
   }
-  //game.updatePanel();
+  game.updatePanel();
   game.renderer.render(game.scene, game.camera);
 }
 
