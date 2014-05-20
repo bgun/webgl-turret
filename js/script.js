@@ -171,7 +171,7 @@ game.init = function() {
     game.ASPECT,
     game.NEAR,
     game.FAR);
-  game.camera.position.z = 600;
+  //game.camera.position.z = 600;
   game.camera.position.y = 1000;
   game.camera.lookAt(new THREE.Vector3(0,0,0));
 
