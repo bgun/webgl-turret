@@ -36,7 +36,7 @@ var game = {
       shading: THREE.FlatShading
     }),
     groundMaterial: new THREE.MeshLambertMaterial({
-      color: 0xAA5500
+      color: 0x55AA33
     }),
     badguyMaterial: new THREE.MeshLambertMaterial({
       color: 0x555555,
@@ -46,22 +46,22 @@ var game = {
       color: 0x994444
     }),
     bulletMaterial: new THREE.MeshBasicMaterial({
-      //blending: THREE.AdditiveBlending,
+      blending: THREE.AdditiveBlending,
       color: 0xFFBB77,
       transparent: true
     }),
     sparkMaterial: new THREE.ParticleBasicMaterial({
-      //blending: THREE.AdditiveBlending,
+      blending: THREE.AdditiveBlending,
       color: 0xFF5500,
       map: THREE.ImageUtils.loadTexture('images/spark.png'),
       size: 100,
       transparent: true
     }),
     blueSparkMaterial: new THREE.ParticleBasicMaterial({
-      //blending: THREE.AdditiveBlending,
+      blending: THREE.AdditiveBlending,
       color: 0x0066FF,
       map: THREE.ImageUtils.loadTexture('images/spark.png'),
-      size: 100,
+      size: 200,
       transparent: true
     }),
     powerupMaterial: new THREE.MeshLambertMaterial({
