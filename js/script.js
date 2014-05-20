@@ -309,9 +309,12 @@ game.makePowerup = function(pos) {
   var p = new THREE.Mesh(
     new THREE.BoxGeometry(50,30,50),
     game.materials.powerupMaterial);
-      p.position = pos;
-      p.properties.vertSpeed = 3;
-      p.properties.powerupType = Math.floor(Math.random()*game.POWERUP_TYPES.length);
+  console.log("powerup",p);
+  p.position = pos;
+  p.data = {
+    vertSpeed   : 3,
+    powerupType : Math.floor(Math.random()*game.POWERUP_TYPES.length)
+  };
 
   game.powerupLight.position = pos;
   game.powerupLight.position.y = 120;
@@ -378,9 +381,12 @@ game.makeBadGuy = function() {
   badguy.rotation.y = game.getAngleTowardPoint(badguy.position, game.entities.turret.position);
 
   var hyp = Math.sqrt(Math.pow(badguy.position.x,2) + Math.pow(badguy.position.z,2));
-  badguy.properties.speedX = -badguy.position.x * (game.ENEMY_SPEED / hyp);
-  badguy.properties.speedZ = -badguy.position.z * (game.ENEMY_SPEED / hyp);
-  badguy.properties.life = game.ENEMY_MAX_LIFE;
+  console.log("badguy",badguy);
+  badguy.data = {
+    speedX : -badguy.position.x * (game.ENEMY_SPEED / hyp),
+    speedZ : -badguy.position.z * (game.ENEMY_SPEED / hyp),
+    life   : game.ENEMY_MAX_LIFE
+  };
 
   game.scene.add(badguy);
   game.entities.badguys.push(badguy);
@@ -547,8 +553,8 @@ game.moveAll = function() {
   for(var p in game.entities.powerups) {
     var pw = game.entities.powerups[p];
     if(pw.position.y > 30) {
-      pw.position.y += pw.properties.vertSpeed;
-      pw.properties.vertSpeed -= 0.2;
+      pw.position.y += pw.data.vertSpeed;
+      pw.data.vertSpeed -= 0.2;
     }
     pw.rotation.y += 0.02;
     for(var j in game.entities.bullets) {
@@ -564,8 +570,8 @@ game.moveAll = function() {
   // move bad guys and do hit tests
   for(var i in game.entities.badguys) {
     var b = game.entities.badguys[i];
-    b.position.x += b.properties.speedX;
-    b.position.z += b.properties.speedZ;
+    b.position.x += b.data.speedX;
+    b.position.z += b.data.speedZ;
 
     // test for badguys hitting turret
     if(game.hitTest(b, game.entities.turret, 90)) {
@@ -584,8 +590,8 @@ game.moveAll = function() {
     for(var j in game.entities.bullets) {
       if(game.hitTest(b, game.entities.bullets[j], 30)) {
         // bad guy hurt or dies
-        b.properties.life -= 1;
-        if(b.properties.life === 0) {
+        b.data.life -= 1;
+        if(b.data.life === 0) {
           game.scene.remove(b);
           game.entities.badguys.splice(i,1);
           var s = game.makeSparks({ pos: game.entities.bullets[j].position });
@@ -595,7 +601,7 @@ game.moveAll = function() {
           game.totalKills++;
           game.sparkLight.position = game.entities.bullets[j].position
           game.sparkLight.intensity = 5;
-        } else if(b.properties.life / game.ENEMY_MAX_LIFE < .5) {
+        } else if(b.data.life / game.ENEMY_MAX_LIFE < .5) {
           b.children[0].material = game.materials.badguyHurtMaterial;
           b.children[1].material = game.materials.badguyHurtMaterial;
         }
