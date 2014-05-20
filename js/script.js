@@ -254,14 +254,6 @@ game.makeTurret = function(x,y,z) {
       base.receiveShadow = true;
       base.position.y = 3;
 
-  var base2 = new THREE.Mesh(
-    new THREE.CylinderGeometry(64,70,16,8,1,false),
-    game.materials.metalWireMaterial);
-      base2.castShadow = true;
-      base2.receiveShadow = true;
-      base2.position.y = 8;
-      base2.rotation.y = 22.5;
-
   var dome = new THREE.Mesh(
     new THREE.SphereGeometry(50,8,8,0,Math.PI*2,0,Math.PI/2),
     game.materials.metalMaterial);
@@ -291,10 +283,8 @@ game.makeTurret = function(x,y,z) {
   var light = new THREE.SpotLight(0xFFDD66, 4);
       light.position.set(30,70,50);
       light.target = lightTarget;
-      light.castShadow = true;
 
   t.add(base);
-  t.add(base2);
   t.add(dome);
   t.add(gun);
   t.add(light);
