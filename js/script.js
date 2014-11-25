@@ -298,7 +298,6 @@ game.makePowerup = function(pos) {
   var p = new THREE.Mesh(
     new THREE.BoxGeometry(50,30,50),
     game.materials.powerupMaterial);
-  console.log("powerup",p);
   p.position = pos;
   p.data = {
     vertSpeed   : 3,
@@ -370,7 +369,6 @@ game.makeBadGuy = function() {
   badguy.rotation.y = game.getAngleTowardPoint(badguy.position, game.entities.turret.position);
 
   var hyp = Math.sqrt(Math.pow(badguy.position.x,2) + Math.pow(badguy.position.z,2));
-  console.log("badguy",badguy);
   badguy.data = {
     speedX : -badguy.position.x * (game.ENEMY_SPEED / hyp),
     speedZ : -badguy.position.z * (game.ENEMY_SPEED / hyp),
